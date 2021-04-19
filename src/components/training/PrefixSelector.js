@@ -24,14 +24,14 @@ class PrefixSelector extends Component {
 
     onPrefixChange(prefix_length) {
         this.errorCheck(prefix_length);
-        this.props.onChange({methodConfig, key: 'prefix_length', isNumber: true}, prefix_length);
+        this.props.onChange({methodConfig, key: 'prefix_length', isFloat: true}, prefix_length);
     }
 
     errorCheck(prefix_length) {
         if (prefix_length === '') {
             return;
         }
-        const pref = parseInt(prefix_length, 10);
+        const pref = parseFloat(prefix_length);
         if (pref > this.props.maxEventsInLog) {
             this.setState({error: true});
         } else {
@@ -80,7 +80,6 @@ class PrefixSelector extends Component {
                 type="number"
                 value={this.props.encoding.prefix_length}
                 onChange={this.onPrefixChange.bind(this)}
-                min={2}
                 max={this.props.maxEventsInLog}
                 required
                 className={cl}

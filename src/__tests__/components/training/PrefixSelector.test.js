@@ -29,7 +29,7 @@ it('is label form', () => {
 
 it('calls on change', () => {
     element.find(TextField).simulate('change', '23');
-    expect(onChange.mock.calls[0][0]).toEqual({'isNumber': true, 'key': 'prefix_length', 'methodConfig': 'encoding'});
+    expect(onChange.mock.calls[0][0]).toEqual({'isFloat': true, 'key': 'prefix_length', 'methodConfig': 'encoding'});
     expect(onChange.mock.calls[0][1]).toEqual('23');
 });
 
