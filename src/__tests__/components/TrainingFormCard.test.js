@@ -213,7 +213,7 @@ describe('labelForm', () => {
   it('shows less elements', () => {
     expect(labelEl).toBeDefined();
     expect(labelEl.find(FetchState).length).toBe(1);
-    expect(labelEl.find(SelectionControlGroup).length).toBe(2);
+    expect(labelEl.find(SelectionControlGroup).length).toBe(3);
     expect(labelEl.find(CheckboxGroup).length).toBe(0);
     expect(labelEl.find(Button).length).toBe(2);
     expect(labelEl.find(AdvancedConfiguration).length).toBe(1);

@@ -15,7 +15,7 @@ beforeEach(() => {
 
 it('renders', () => {
     expect(element).toBeDefined();
-    expect(element.find(SelectionControlGroup).length).toBe(2);
+    expect(element.find(SelectionControlGroup).length).toBe(3);
     expect(element.find(TextField).length).toBe(1);
     expect(element.find('.md-cell--4').length).toBe(1);
 });
@@ -24,7 +24,7 @@ it('renders', () => {
 it('is label form', () => {
     element.setProps({isLabelForm: true});
     expect(element).toBeDefined();
-    expect(element.find('.md-cell--3').length).toBe(3);
+    expect(element.find('.md-cell--3').length).toBe(4);
 });
 
 it('calls on change', () => {

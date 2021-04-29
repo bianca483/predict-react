@@ -12,7 +12,7 @@ import {
     ZERO_PADDING
 } from '../../reference';
 import {encodingPropType} from '../../propTypes';
-import {Slider} from "react-md";
+import {Slider} from 'react-md';
 
 const groupStyle = {height: 'auto'};
 const methodConfig = 'encoding';
@@ -42,17 +42,18 @@ class PrefixSelector extends Component {
         }
     }
 
-    changePrefixType(value){
+    changePrefixType(value) {
         this.setState({p_len_type: value});
     }
 
     render() {
         const classes = this.props.isLabelForm ? 'md-grid' : 'md-cell md-cell--4';
         const cl = this.props.isLabelForm ? 'md-cell md-cell--3' : '';
-
+        const prefixLengthText =
+            this.props.predictionMethod === TIME_SERIES_PREDICTION ? 'Samples length' : 'Prefix length';
         let p_len;
 
-        if(this.state.p_len_type === 'int'){
+        if (this.state.p_len_type === 'int') {
             p_len = (<TextField
                 id="prefixLength"
                 label={`${prefixLengthText} (maximum ${this.props.maxEventsInLog})`}
@@ -99,8 +100,6 @@ class PrefixSelector extends Component {
                     (!this.props.regression.includes(NN))))
         );
 
-        const prefixLengthText =
-            this.props.predictionMethod === TIME_SERIES_PREDICTION ? 'Samples length' : 'Prefix length';
 
         return <div className={classes}>
             <SelectionControlGroup type="radio" name="padding" id="padding" label="Encoded log padding" inline
