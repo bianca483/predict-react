@@ -320,6 +320,21 @@ const prefixTypes = [
     }
 ];
 
+const prefixLengthTypes = [
+    {
+        key: 'int',
+        label: 'Fixed prefix length',
+        value: 'int'
+    },
+    {
+        key: 'float',
+        label: 'Variable percentage prefix length',
+        value: 'float',
+        message: 'This option needs "0" padding to work properly'
+    }
+];
+
+
 // Makes things for Selection Controls
 export const controlCreator = (optMap) => {
     return optMap.map((opt) => {
@@ -348,5 +363,6 @@ export const classLabelControls = controlCreator(classificationLabelTypes);
 export const timeSeriesPredLabelControls = controlCreator(timeSeriesPredictionLabelTypes);
 export const paddingControls = controlCreator(padding);
 export const prefixTypeControls = controlCreator(prefixTypes);
+export const prefixLengthTypeControls = controlCreator(prefixLengthTypes);
 
 export const columnStyle = {paddingRight: '12px'};

@@ -7,10 +7,12 @@ import {
     ONLY_THIS,
     paddingControls,
     prefixTypeControls,
+    prefixLengthTypeControls,
     TIME_SERIES_PREDICTION,
     ZERO_PADDING
 } from '../../reference';
 import {encodingPropType} from '../../propTypes';
+import {Slider} from "react-md";
 
 const groupStyle = {height: 'auto'};
 const methodConfig = 'encoding';
@@ -19,7 +21,8 @@ const methodConfig = 'encoding';
 class PrefixSelector extends Component {
     constructor(props) {
         super(props);
-        this.state = {error: false};
+        this.state = {error: false,
+                        p_len_type: 'int'};
     }
 
     onPrefixChange(prefix_length) {
@@ -39,9 +42,44 @@ class PrefixSelector extends Component {
         }
     }
 
+    changePrefixType(value){
+        this.setState({p_len_type: value});
+    }
+
     render() {
         const classes = this.props.isLabelForm ? 'md-grid' : 'md-cell md-cell--4';
         const cl = this.props.isLabelForm ? 'md-cell md-cell--3' : '';
+
+        let p_len;
+
+        if(this.state.p_len_type === 'int'){
+            p_len = (<TextField
+                id="prefixLength"
+                label={`${prefixLengthText} (maximum ${this.props.maxEventsInLog})`}
+                type="number"
+                value={this.props.encoding.prefix_length}
+                onChange={this.onPrefixChange.bind(this)}
+                max={this.props.maxEventsInLog}
+                min={2}
+                required
+                className={cl}
+                error={this.state.error}
+                errorText={`Can't be greater than log maximum prefix length
+                ${this.props.maxEventsInLog} and smaller then 2`}/>);
+        } else {
+            p_len = (<Slider
+                id="prefixLengthSlider"
+                label="Prefix length percentage. Default 0.2.  Min = 0, Max = 1, Step = 0.05"
+                min={0}
+                max={1}
+                step={0.05}
+                value={this.props.encoding.prefix_length}
+                valuePrecision={2}
+                discrete
+                onChange={this.onPrefixChange.bind(this)}
+            />);
+        }
+
 
         const filteredPaddingControls = paddingControls.filter(obj =>
             (((this.props.predictionMethod === TIME_SERIES_PREDICTION && [ZERO_PADDING].includes(obj.value)) ||
@@ -74,19 +112,13 @@ class PrefixSelector extends Component {
                                    controls={filteredPrefixTypeControls} inline className={cl}
                                    value={this.props.encoding.generation_type} controlStyle={groupStyle}/>
 
-            <TextField
-                id="prefixLength"
-                label={`${prefixLengthText} (maximum ${this.props.maxEventsInLog})`}
-                type="number"
-                value={this.props.encoding.prefix_length}
-                onChange={this.onPrefixChange.bind(this)}
-                max={this.props.maxEventsInLog}
-                required
-                className={cl}
-                error={this.state.error}
-                errorText={`Can't be greater than log maximum prefix length
-                ${this.props.maxEventsInLog} and smaller then 2`}
-            />
+            <SelectionControlGroup type="radio" name="prefix_length" id="prefix_length" label="Prefix Length"
+                                   onChange={this.changePrefixType.bind(this)}
+                                   controls={prefixLengthTypeControls} inline className={cl}
+                                   value={this.state.p_len_type} controlStyle={groupStyle}/>
+
+            {p_len}
+
         </div>;
     }
 }
